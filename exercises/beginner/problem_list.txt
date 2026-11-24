@@ -1,0 +1,338 @@
+
+(* Problem 3: N'th Element of a List
+Beginner
+
+Find the N'th element of a list.
+
+# at 2 ["a"; "b"; "c"; "d"; "e"];;
+- : string option = Some "c"
+# at 2 ["a"];;
+- : string option = None
+
+Remark: OCaml has List.nth which numbers elements from 0 and raises an exception if the index is out of bounds.
+
+# List.nth ["a"; "b"; "c"; "d"; "e"] 2;;
+- : string = "c"
+# List.nth ["a"] 2;;
+Exception: Failure "nth".
+
+(* Problem 4: Length of a List
+Beginner
+
+Find the number of elements of a list.
+
+OCaml standard library has List.length but we ask that you reimplement it. Bonus for a tail recursive solution.
+
+# length ["a"; "b"; "c"];;
+- : int = 3
+# length [];;
+- : int = 0
+
+(* Problem 5: Reverse a List
+Beginner
+
+Reverse a list.
+
+OCaml standard library has List.rev but we ask that you reimplement it.
+
+# rev ["a"; "b"; "c"];;
+- : string list = ["c"; "b"; "a"]
+
+(* Problem 6: Palindrome
+Beginner
+
+Find out whether a list is a palindrome.
+
+Hint: A palindrome is its own reverse.
+
+# is_palindrome ["x"; "a"; "m"; "a"; "x"];;
+- : bool = true
+# not (is_palindrome ["a"; "b"]);;
+- : bool = true
+
+(* Problem 7: Run-Length Encoding
+Beginner
+
+If you need to, refresh your memory about run-length encoding.
+
+Here is an example:
+
+# encode ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"];;
+- : (int * string) list =
+[(4, "a"); (1, "b"); (2, "c"); (2, "a"); (1, "d"); (4, "e")]
+
+(* Problem 8: Modified Run-Length Encoding
+Beginner
+
+Modify the result of the previous problem in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
+
+Since OCaml lists are homogeneous, one needs to define a type to hold both single elements and sub-lists.
+
+type 'a rle =
+  | One of 'a
+  | Many of int * 'a
+
+# encode ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e"];;
+- : string rle list =
+[Many (4, "a"); One "b"; Many (2, "c"); Many (2, "a"); One "d";
+ Many (4, "e")]
+
+(* Problem 9: Duplicate the Elements of a List
+Beginner
+
+Duplicate the elements of a list.
+
+# duplicate ["a"; "b"; "c"; "c"; "d"];;
+- : string list = ["a"; "a"; "b"; "b"; "c"; "c"; "c"; "c"; "d"; "d"]
+
+(* Problem 10: Split a List Into Two Parts; The Length of the First Part Is Given
+Beginner
+
+Split a list into two parts; the length of the first part is given.
+
+If the length of the first part is longer than the entire list, then the first part is the list and the second part is empty.
+
+# split ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 3;;
+- : string list * string list =
+(["a"; "b"; "c"], ["d"; "e"; "f"; "g"; "h"; "i"; "j"])
+# split ["a"; "b"; "c"; "d"] 5;;
+- : string list * string list = (["a"; "b"; "c"; "d"], [])
+
+(* Problem 11: Remove the K'th Element From a List
+Beginner
+
+Remove the K'th element from a list.
+
+The first element of the list is numbered 0, the second 1,...
+
+# remove_at 1 ["a"; "b"; "c"; "d"];;
+- : string list = ["a"; "c"; "d"]
+
+(* Problem 12: Insert an Element at a Given Position Into a List
+Beginner
+
+Start counting list elements with 0. If the position is larger or equal to the length of the list, insert the element at the end. (The behavior is unspecified if the position is negative.)
+
+# insert_at "alfa" 1 ["a"; "b"; "c"; "d"];;
+- : string list = ["a"; "alfa"; "b"; "c"; "d"]
+
+(* Problem 13: Create a List Containing All Integers Within a Given Range
+Beginner
+
+If first argument is greater than second, produce a list in decreasing order.
+
+# range 4 9;;
+- : int list = [4; 5; 6; 7; 8; 9]
+
+(* Problem 14: Lotto: Draw N Different Random Numbers From the Set 1..M
+Beginner
+
+Draw N different random numbers from the set 1..M.
+
+The selected numbers shall be returned in a list.
+
+# lotto_select 6 49;;
+- : int list = [20; 28; 45; 16; 24; 38]
+
+(* Problem 15: Generate a Random Permutation of the Elements of a List
+Beginner
+
+Generate a random permutation of the elements of a list.
+
+# permutation ["a"; "b"; "c"; "d"; "e"; "f"];;
+- : string list = ["c"; "d"; "f"; "e"; "b"; "a"]
+
+(* Problem 16: Determine Whether Two Positive Integer Numbers Are Coprime
+Beginner
+
+Determine whether two positive integer numbers are coprime.
+
+Two numbers are coprime if their greatest common divisor equals 1.
+
+# coprime 13 27;;
+- : bool = true
+# not (coprime 20536 7826);;
+- : bool = true
+
+(* Problem 17: Compare the Two Methods of Calculating Euler's Totient Function
+Beginner
+
+Use the solutions of problems "Calculate Euler's totient function φ(m)" and "Calculate Euler's totient function φ(m) (improved)" to compare the algorithms. Take the number of logical inferences as a measure for efficiency. Try to calculate φ(10090) as an example.
+
+timeit phi 10090
+
+(* Problem 18: A List of Prime Numbers
+Beginner
+
+Given a range of integers by its lower and upper limit, construct a list of all prime numbers in that range.
+
+# List.length (all_primes 2 7920);;
+- : int = 1000
+
+(* Problem 19: Count the Leaves of a Binary Tree
+Beginner
+
+A leaf is a node with no successors. Write a function count_leaves to count them.
+
+# count_leaves Empty;;
+- : int = 0
+
+(* Problem 20: Collect the Leaves of a Binary Tree in a List
+Beginner
+
+A leaf is a node with no successors. Write a function leaves to collect them in a list.
+
+# leaves Empty;;
+- : 'a list = []
+
+(* Problem 21: Collect the Internal Nodes of a Binary Tree in a List
+Beginner
+
+An internal node of a binary tree has either one or two non-empty successors. Write a function internals to collect them in a list.
+
+# internals (Node ('a', Empty, Empty));;
+- : char list = []
+
+(* Problem 22: Collect the Nodes at a Given Level in a List
+Beginner
+
+A node of a binary tree is at level N if the path from the root to the node has length N-1. The root node is at level 1. Write a function at_level t l to collect all nodes of the tree t at level l in a list.
+
+# let example_tree =
+  Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+       Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)));;
+val example_tree : char binary_tree =
+  Node ('a', Node ('b', Node ('d', Empty, Empty), Node ('e', Empty, Empty)),
+   Node ('c', Empty, Node ('f', Node ('g', Empty, Empty), Empty)))
+# at_level example_tree 2;;
+- : char list = ['b'; 'c']
+
+Using at_level it is easy to construct a function levelorder which creates the level-order sequence of the nodes. However, there are more efficient ways to do that.
+(* Problem 23: Count the Nodes of a Multiway Tree
+Beginner
+
+# count_nodes (T ('a', [T ('f', []) ]));;
+- : int = 2
+
+(* Problem 24: Determine the Internal Path Length of a Tree
+Beginner
+
+We define the internal path length of a multiway tree as the total sum of the path lengths from the root to all nodes of the tree. By this definition, the tree t in the figure of the previous problem has an internal path length of 9. Write a function ipl tree that returns the internal path length of tree.
+
+# ipl t;;
+- : int = 9
+
+(* Problem 25: Construct the Bottom-Up Order Sequence of the Tree Nodes
+Beginner
+
+Write a function bottom_up t which constructs the bottom-up sequence of the nodes of the multiway tree t.
+
+# bottom_up (T ('a', [T ('b', [])]));;
+- : char list = ['b'; 'a']
+# bottom_up t;;
+- : char list = ['g'; 'f'; 'c'; 'd'; 'e'; 'b'; 'a']
+
+(* Problem 26: Conversions
+Beginner
+
+A graph
+
+A graph is defined as a set of nodes and a set of edges, where each edge is a pair of different nodes.
+
+There are several ways to represent graphs in OCaml.
+
+    One method is to list all edges, an edge being a pair of nodes. In this form, the graph depicted above is represented as the following expression:
+
+# [('h', 'g'); ('k', 'f'); ('f', 'b'); ('f', 'c'); ('c', 'b')];;
+- : (char * char) list =
+[('h', 'g'); ('k', 'f'); ('f', 'b'); ('f', 'c'); ('c', 'b')]
+
+We call this edge-clause form. Obviously, isolated nodes cannot be represented.
+
+    Another method is to represent the whole graph as one data object. According to the definition of the graph as a pair of two sets (nodes and edges), we may use the following OCaml type:
+
+# type 'a graph_term = {nodes : 'a list;  edges : ('a * 'a) list};;
+type 'a graph_term = { nodes : 'a list; edges : ('a * 'a) list; }
+
+Then, the above example graph is represented by:
+
+# let example_graph =
+  {nodes = ['b'; 'c'; 'd'; 'f'; 'g'; 'h'; 'k'];
+   edges = [('h', 'g'); ('k', 'f'); ('f', 'b'); ('f', 'c'); ('c', 'b')]};;
+val example_graph : char graph_term =
+  {nodes = ['b'; 'c'; 'd'; 'f'; 'g'; 'h'; 'k'];
+   edges = [('h', 'g'); ('k', 'f'); ('f', 'b'); ('f', 'c'); ('c', 'b')]}
+
+We call this graph-term form. Note, that the lists are kept sorted, they are really sets, without duplicated elements. Each edge appears only once in the edge list; i.e. an edge from a node x to another node y is represented as (x, y), the couple (y, x) is not present. The graph-term form is our default representation. You may want to define a similar type using sets instead of lists.
+
+    A third representation method is to associate with each node the set of nodes that are adjacent to that node. We call this the adjacency-list form. In our example:
+
+let adjacency_example = ['b', ['c'; 'f'];
+                         'c', ['b'; 'f'];
+                         'd', [];
+                         'f', ['b'; 'c'; 'k'];
+                         'g', ['h'];
+                         'h', ['g'];
+                         'k', ['f']
+                         ];;
+val adjacency_example : (char * char list) list =
+  [('b', ['c'; 'f']); ('c', ['b'; 'f']); ('d', []); ('f', ['b'; 'c'; 'k']);
+   ('g', ['h']); ('h', ['g']); ('k', ['f'])]
+
+    The representations we introduced so far are well suited for automated processing, but their syntax is not very user-friendly. Typing the terms by hand is cumbersome and error-prone. We can define a more compact and "human-friendly" notation as follows: A graph (with char labelled nodes) is represented by a string of atoms and terms of the type X-Y. The atoms stand for isolated nodes, the X-Y terms describe edges. If an X appears as an endpoint of an edge, it is automatically defined as a node. Our example could be written as:
+
+# "b-c f-c g-h d f-b k-f h-g";;
+- : string = "b-c f-c g-h d f-b k-f h-g"
+
+We call this the human-friendly form. As the example shows, the list does not have to be sorted and may even contain the same edge multiple times. Notice the isolated node d.
+
+Write functions to convert between the different graph representations. With these functions, all representations are equivalent; i.e. for the following problems you can always pick freely the most convenient form. This problem is not particularly difficult, but it's a lot of work to deal with all the special cases. *)
+
+(* Problem 27: Cycle From a Given Node
+Beginner
+
+Write a function cycle g a that returns a closed path (cycle) p starting at a given node a in the graph g. The predicate should return the list of all cycles via backtracking.
+
+# let example_graph =
+  {nodes = ['b'; 'c'; 'd'; 'f'; 'g'; 'h'; 'k'];
+   edges = [('h', 'g'); ('k', 'f'); ('f', 'b'); ('f', 'c'); ('c', 'b')]};;
+val example_graph : char graph_term =
+  {nodes = ['b'; 'c'; 'd'; 'f'; 'g'; 'h'; 'k'];
+   edges = [('h', 'g'); ('k', 'f'); ('f', 'b'); ('f', 'c'); ('c', 'b')]}
+# cycles example_graph 'f';;
+- : char list list =
+[['f'; 'b'; 'c'; 'f']; ['f'; 'c'; 'f']; ['f'; 'c'; 'b'; 'f'];
+ ['f'; 'b'; 'f']; ['f'; 'k'; 'f']] *)
+
+(* Problem 28: Never-Ending Sequences
+Beginner
+
+Lists are finite, meaning they always contain a finite number of elements. Sequences may be finite or infinite.
+
+The goal of this exercise is to define a type 'a stream which only contains infinite sequences. Using this type, define the following functions:
+
+val hd : 'a stream -> 'a
+(** Returns the first element of a stream *)
+val tl : 'a stream -> 'a stream
+(** Removes the first element of a stream *)
+val take : int -> 'a stream -> 'a list
+(** [take n seq] returns the n first values of [seq] *)
+val unfold : ('a -> 'b * 'a) -> 'a -> 'b stream
+(** Similar to Seq.unfold *)
+val bang : 'a -> 'a stream
+(** [bang x] produces an infinitely repeating sequence of [x] values. *)
+val ints : int -> int stream
+(* Similar to Seq.ints *)
+val map : ('a -> 'b) -> 'a stream -> 'b stream
+(** Similar to List.map and Seq.map *)
+val filter: ('a -> bool) -> 'a stream -> 'a stream
+(** Similar to List.filter and Seq.filter *)
+val iter : ('a -> unit) -> 'a stream -> 'b
+(** Similar to List.iter and Seq.iter *)
+val to_seq : 'a stream -> 'a Seq.t
+(** Translates an ['a stream] into an ['a Seq.t] *)
+val of_seq : 'a Seq.t -> 'a stream
+(** Translates an ['a Seq.t] into an ['a stream]
+    @raise Failure if the input sequence is finite. *)
+
+Tip: Use let ... = patterns. *)
